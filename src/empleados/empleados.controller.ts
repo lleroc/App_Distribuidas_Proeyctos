@@ -1,27 +1,19 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Req,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Req } from '@nestjs/common';
 import { IEmpleado } from 'src/Interfaces/Empleados.interface';
+import { EmpleadosService } from './empleados.service';
 
 @Controller('api/v1/empleados')
 export class EmpleadosController {
-  constructor() {}
+  constructor(private empleadoServicio: EmpleadosService) {}
 
   @Post()
-  insertar(@Req() peticion: Request) {
-    return `el metodo usado es ${peticion.method}`;
+  insertar(@Body() empleado: IEmpleado) {
+    return this.empleadoServicio.insertar(empleado);
   }
 
   @Get()
-  todos(@Req() peticion: Request) {
-    return `el metodo usado es ${peticion.method}`;
+  todos() {
+    return this.empleadoServicio.todos();
   }
 
   @Get(':id')
